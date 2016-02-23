@@ -1,0 +1,9 @@
+<%= simple_form_for @app do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description, as: :text %>
+  <%= f.input :git%>
+  <%= f.input :link%>
+  <%= f.input :image%>
+  <%= f.input :category%>
+  <%= f.button :submit %>
+<% end %>

@@ -1,5 +1,6 @@
 class AppsController < ApplicationController
-	before_action :authenticate_user!, only: [:new, :create, :delete]
+	before_action :authenticate_user!, only: [:new, :create, :destroy, :edit]
+	before_action :find_app, only: [ :destroy, :edit, :show, :update]
   def index
   	@apps = App.all
   end
@@ -11,10 +12,23 @@ class AppsController < ApplicationController
   def create
   	@app = App.new(new_params)
   	if @app.save
+  		flash[:success] = "app created"
   		redirect_to root_path
   	else
   		render('new')
   	end
+  end
+
+  def edit
+  end
+
+  def update
+	if @app.update(new_params)
+		flash[:success] = "app updated"
+		redirect_to root_path
+	else
+		render 'edit'
+	end 	
   end
 
 
@@ -28,15 +42,18 @@ class AppsController < ApplicationController
   end
 
   def mail
-  	redirect_to root_path
 
   	name = params[:name]
   	email = params[:email]
   	phone = params[:phone]
   	message = params[:message]
-	contact.contact_mail(name,email,phone,message).deliver_now
-	
+	Contact.contact_mail(name,email,phone,message).deliver_now
+	redirect_to root_path
 
+  end
+
+  def find_app
+  	@app = App.find(params[:id])
   end
 
 

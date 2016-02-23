@@ -1,5 +1,11 @@
-<h1>Contact#contact_mail</h1>
+<h1>You have new message from your Portfolio </h1>
 
 <p>
-  <%= @greeting %>, find me in app/views/contact/contact_mail.html.erb
+  <strong><%= @name %></strong> wrote to you, his email: <strong><%= @email %> </strong>, his phone: <strong><%= @phone %></strong>.
+</p>
+
+<strong>Message:</strong>
+<p>
+<% @message %>
+
 </p>
