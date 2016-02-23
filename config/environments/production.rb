@@ -22,12 +22,13 @@ Rails.application.configure do
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => "gmail.com",
-      :user_name            => "",
-      :password             => "",
+      :user_name            => ENV["EMAIL"],
+      :password             => ENV["PASSWORD"],
       :authentication       => :plain,
       :enable_starttls_auto => true,
       :openssl_verify_mode => 'none' 
 }
+
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
   # For large-scale production use, consider using a caching reverse proxy like
