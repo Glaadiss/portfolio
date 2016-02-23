@@ -14,3 +14,9 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
+//= require classie.js
+//= require cbpAnimatedHeader.js
+//= require jqBootstrapValidation.js
+//= require contact_me.js
+//= require freelancer.js
+
