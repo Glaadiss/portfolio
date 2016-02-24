@@ -1,7 +1,8 @@
 <i><%= review.user %></i>
 </br>
 <b><%= review.description %> </b> 
+<% if review.rating %>
 <div class="review-rating" data-score="<%= review.rating %>"> 
 </div>
-
+<% end %>
 
