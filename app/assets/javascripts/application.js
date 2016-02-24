@@ -15,13 +15,4 @@
 //= require contact_me.js
 //= require freelancer.js
 //= require classie.js
-//= require jquery.raty.js
 
-
-$(function(){
-	$('.btn btn-default').click(function(){
-		alert('click');
-	})
-
-
-})
