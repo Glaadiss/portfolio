@@ -271,7 +271,10 @@
 
 <script>
 $(function(){
- 	$('#click_'+ <%= app.id %>).click(function(){
+ 	$('#click_'+ <%= app.id %>).on('click',function(){
+
+
+
       var user = $("#user_"+ <%= app.id %>).val();
       var rating = $("#raty_"+ <%= app.id %> + " input").val();
       var rating = parseInt(rating);
@@ -279,6 +282,16 @@ $(function(){
       var div = '<i>'+user+'</i></br><b>'+description+'</b><div class="review-rating" data-score="'+rating+'"></div>';
       $("#app_reviews_<%= app.id %>").append(' '+div+' ');
       console.log("element added + ");
+
+      $('.review-rating').raty({
+          readOnly:true, 
+          score: function(){
+            return $(this).attr('data-score');
+        },
+        path: '/assets'
+      });
+
+      $(this).closest('form').find("input[type=text], textarea").val("");
 
 	})
 
