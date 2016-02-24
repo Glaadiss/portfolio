@@ -64,7 +64,6 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2>Portfolio</h2>
-                    <hr class="star-primary">
                 </div>
             </div>
             <% if user_signed_in? %>
@@ -75,7 +74,7 @@
             <% end %> 
             <%@apps.each do |app| %>
 
-                <div class="col-sm-4 portfolio-item">
+                <div class="col-sm-4 portfolio-item" id="App_<%= app.id %>">
                     <a href="#<%= app.id%>" class="portfolio-link" data-toggle="modal">
                         <div class="caption">
                             <div class="caption-content">
@@ -85,7 +84,7 @@
                             <%= image_tag app.image , class:'img-responsive ' %>
 
                             <% if user_signed_in? %>
-                            <p><%= link_to 'Remove app', app, :confirm => 'Are you sure you want to remove this comment? This cannot be undone.', :method => :delete %></p>
+                            <p><%= link_to 'Remove app', app, :confirm => 'Are you sure you want to remove this comment? This cannot be undone.', :method => :delete,remote: true %></p>
 							<p><%= link_to 'Edit app', edit_app_path(id: app.id)%></p>
                             <% end %>
                     </a>
@@ -109,7 +108,7 @@
                     <p>In the moment i study in IT technical. In the future i want to be Backend Developer. I'am determined to learning more and more about Ruby On Rails and Node.js. That is pretty cool. </p>
                 </div>
                 <div class="col-lg-4">
-                    <p>In the free time i am playing soccer and playing guitar.</p>
+                    <p>In the free time i like to playing soccer and playing guitar.</p>
                 </div>
             </div>
         </div>
@@ -186,20 +185,18 @@
                         <h3>Around the Web</h3>
                         <ul class="list-inline">
                             <li>
-                                <a href="https://www.facebook.com/profile.php?id=100003185409017&fref=ts" target="_blank"class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+                                <a href="https://www.facebook.com/profile.php?id=100003185409017&fref=ts" target="_blank" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
                             </li>
                             <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-google-plus"></i></a>
+                                <a href="https://twitter.com/glaadiss7" class="btn-social btn-outline" target="_blank"><i class="fa fa-fw fa-twitter"></i></a>
                             </li>
                             <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+                                <a href="https://www.linkedin.com/in/bart%C5%82omiej-g%C5%82adys-9228a7115?trk=hp-identity-name" class="btn-social btn-outline" target="_blank"><i class="fa fa-fw fa-linkedin"></i></a>
                             </li>
                             <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
+                                <a href="https://github.com/glaadiss" class="btn-social btn-outline" target="_blank"><i class="fa fa-fw fa-github"></i></a>
                             </li>
-                            <li>
-                                <a href="#" class="btn-social btn-outline"><i class="fa fa-fw fa-dribbble"></i></a>
-                            </li>
+
                         </ul>
                     </div>
                     <div class="footer-col col-md-4">
@@ -213,7 +210,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-                    
+
                         Copyright &copy; Bartłomiej Gładys<%= link_to('.', new_user_session_path)  %>
                     </div>
                 </div>
@@ -245,7 +242,7 @@
                             <h2><%= app.name %></h2>
                             <hr class="star-primary">
                             <%= image_tag app.image, class:'img-responsive img-centered' %>
-
+							
                             <p> <%= app.description %></p>
                             <ul class="list-inline item-details">
                                 <li>github:
@@ -261,6 +258,41 @@
                                     </strong>
                                 </li>
                             </ul>
+							<div class="col-md-4" >
+                            <h4> Mark this app :)</h4>
+                            <%= simple_form_for([app, app.reviews.build], remote: true) do |f| %>
+								<%= f.input :user, input_html: {id: "user_#{app.id}"} %>
+								<label> Rating </label>
+								<div class="rating-form" id="raty_<%=app.id%>">				
+								</div>
+								<%= f.input :description, as: :text, input_html: {id: "desc_#{app.id}"}  %>
+								<input type="hidden" name="review[app_id]" value="<%= app.id %>">
+								<input type="submit" name="commit" value="Create Review" class="btn btn-default" id="click_<%= app.id %>">
+
+<script>
+$(function(){
+ 	$('#click_'+ <%= app.id %>).click(function(){
+      var user = $("#user_"+ <%= app.id %>).val();
+      var rating = $("#raty_"+ <%= app.id %> + " input").val();
+      var rating = parseInt(rating);
+      var description = $("#desc_"+ <%= app.id %>).val();
+      var div = '<i>'+user+'</i></br><b>'+description+'</b><div class="review-rating" data-score="'+rating+'"></div>';
+      $("#app_reviews_<%= app.id %>").append(' '+div+' ');
+      console.log("element added + ");
+
+	})
+
+})
+
+</script>
+
+
+
+                            <% end %>
+                            </div>
+							<div class="col-md-8" id="app_reviews_<%= app.id %>" >
+                            <%= render app.reviews %>
+                            </div>
                             <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> Close</button>
                         </div>
                     </div>
@@ -269,3 +301,4 @@
         </div>
     </div>
     <% end %>
+

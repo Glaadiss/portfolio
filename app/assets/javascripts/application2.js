@@ -10,18 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require cbpAnimatedHeader.js
-//= require jqBootstrapValidation.js
-//= require contact_me.js
-//= require freelancer.js
-//= require classie.js
-//= require jquery.raty.js
-
-
-$(function(){
-	$('.btn btn-default').click(function(){
-		alert('click');
-	})
-
-
-})
+//= require jquery
+//= require jquery_ujs
+//= require turbolinks
+//= require bootstrap-sprockets

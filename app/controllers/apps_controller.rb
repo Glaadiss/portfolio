@@ -20,6 +20,7 @@ class AppsController < ApplicationController
   end
 
   def edit
+
   end
 
   def update
@@ -34,7 +35,12 @@ class AppsController < ApplicationController
 
   def destroy
   	@app.destroy
-	redirect_to root_path
+  	respond_to do |format|
+  		format.html { redirect_to root_path }
+  		format.js 
+  		format.json 
+  	end
+	
   end
 
   def new_params
